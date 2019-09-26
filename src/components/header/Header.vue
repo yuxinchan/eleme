@@ -17,18 +17,25 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div v-if="seller.supports" class="support-count" @click="showDetail">
         <span class="count">{{seller.supports.length}}个</span>
         <e-icon name="keyboard_arrow_right"></e-icon>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showDetail">
       <span class="bulletin-title"></span>
       <span class="bulletin-text">{{seller.bulletin}}</span>
       <e-icon name="keyboard_arrow_right"></e-icon>
     </div>
     <div class="background">
       <img :src="seller.avatar" width="100%" height="100%">
+    </div>
+    <div v-show="detailShow" class="detail" transition="fade">
+      <div class="detail-wrapper clearfix">
+
+      <div class="detail-close">
+        <e-icon name="close"></e-icon>
+      </div>
     </div>
   </div>
 </template>
@@ -43,16 +50,27 @@
     props: {
       seller: Object
     },
+    data() {
+      return {
+        detailShow: false
+      };
+    },
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+    },
+    methods: {
+      showDetail() {
+        this.detailShow = true;
+      }
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-  @import "./../../common/stylus/mixin.styl"
+  @import "./../../common/stylus/index.styl"
   .header
     position relative
+    overflow hidden
     color #fff
     background rgba(7, 17, 27, 0.5)
     .content-wrapper
@@ -160,7 +178,27 @@
       top 0
       left 0
       width 100%
-      height 100%
+      height 200%
       z-index -1
       filter blur(10px)
+    .detail
+      position fixed
+      z-inde 100
+      top 0
+      left 0
+      width 100%
+      height 100%
+      overflow auto
+      background rgba(7, 17, 27, 0.5)
+      transition all 0.5s
+      backdrop-filter blur(10px)
+      .detail-close
+        position relative
+        width 32px
+        height 32px
+        margin -64px auto 0 auto
+        clear both
+        font-size 32px
+        .e-icon
+          fill #fff
 </style>
