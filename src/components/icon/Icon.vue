@@ -1,5 +1,5 @@
 <template>
-    <svg class="s-icon">
+    <svg class="e-icon">
         <use :xlink:href="`#icon-${name}`"></use>
     </svg>
 </template>
@@ -11,7 +11,7 @@
     }
 </script>
 <style lang="stylus" scoped>
-    .g-icon
+    .e-icon
         width: 1em
         height: 1em
 </style>
