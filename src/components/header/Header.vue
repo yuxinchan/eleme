@@ -6,7 +6,10 @@
 
 <script>
 export default {
-    name: 'Header'
+    name: 'Header',
+    props: {
+        seller: Object
+    }
 }
 </script>
 

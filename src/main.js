@@ -4,11 +4,14 @@ import App from './App.vue'
 import Goods from './components/goods/goods'
 import Ratings from './components/ratings/ratings'
 import Seller from './components/seller/seller'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 import './common/stylus/index.styl'
 
 Vue.config.productionTip = false
 
+Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
 
 const routes = [

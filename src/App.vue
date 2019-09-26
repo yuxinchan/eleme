@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <s-header></s-header>
+    <e-header :seller="seller"></e-header>
     <div class="tab border-1px">
       <div class="tab-item">
         <router-link tag="div" to="/goods">商品</router-link>
@@ -25,7 +25,27 @@
   export default {
     name: 'app',
     components: {
-      sHeader: Header
+      eHeader: Header
+    },
+    data () {
+      return {
+        seller: {}
+      }
+    },
+    created() {
+      this.getSellerInfo()
+    },
+    methods: {
+      getSellerInfo() {
+        this.axios.get('/api/seller').then(this.getSellerInfoSucc)
+      },
+      getSellerInfoSucc(res) {
+        res = res.data
+        if (res.ret && res.data) {
+          const data = res.data
+          this.seller = data.seller
+        }
+      }
     }
   }
 </script>
