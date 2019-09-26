@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <e-header :seller="seller"></e-header>
+    <e-header class="e-header" :seller="seller"></e-header>
     <div class="tab border-1px">
       <div class="tab-item">
         <router-link tag="div" to="/goods">商品</router-link>
