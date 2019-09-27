@@ -6,7 +6,7 @@ import Ratings from './components/ratings/ratings'
 import Seller from './components/seller/seller'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import './css/reset.css'
+import 'reset-css'
 
 import './common/stylus/index.styl'
 

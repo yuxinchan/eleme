@@ -50,13 +50,21 @@
         </li>
       </ul>
     </div>
+    <shopcart
+        :delivery-price="seller.deliveryPrice"
+        :min-price="seller.minPrice"
+    ></shopcart>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import Shopcart from './../shopcart/Shopcart'
 export default {
   name: "Goods",
+  components: {
+    Shopcart
+  },
   props: {
     seller: Object
   },
