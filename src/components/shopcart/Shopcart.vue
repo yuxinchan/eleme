@@ -4,7 +4,7 @@
       <div class="content-left">
         <div class="logo-wrapper">
           <div class="logo" :class="{'highlight':totalCount>0}">
-            <e-icon name="shopping_cart" :class="{'highlight':totalCount>0}"></e-icon>
+            <e-icon tag="div" name="shopping_cart" :class="{'highlight':totalCount>0}"></e-icon>
           </div>
           <div class="num" v-show="totalCount>0">{{totalCount}}</div>
         </div>
@@ -17,6 +17,18 @@
         </div>
       </div>
     </div>
+    <div class="ball-container">
+      <transition-group name="drop" >
+        <div
+            v-for="ball in balls"
+            :key="ball.id"
+            v-show="ball.show"
+            class="ball"
+        >
+          <div class="inner inner-hook"></div>
+        </div>
+      </transition-group>
+      </div>
   </div>
 </template>
 
@@ -46,6 +58,32 @@
         default: 0
       }
     },
+    data() {
+      return {
+        balls: [{
+          id: 1,
+          show: false,
+          el: {}
+        },{
+          id: 2,
+          show: false,
+          el: {}
+        },{
+          id: 3,
+          show: false,
+          el: {}
+        },{
+          id: 4,
+          show: false,
+          el: {}
+        },{
+          id: 5,
+          show: false,
+          el: {}
+        }],
+        dropBalls: []
+      }
+    },
     computed: {
       totalPrice() {
         let total = 0
@@ -73,9 +111,24 @@
       },
       payClass() {
         if (this.totalPrice < this.minPrice) {
-          return 'not-enough';
+          return 'not-enough'
         } else {
-          return 'enough';
+          return 'enough'
+        }
+      }
+    },
+    methods: {
+      drop(el) {
+        for (let i = 0; i < this.balls.length; i++) {
+          let ball = this.balls[i]
+          if (!ball.show) {
+            // this.$set(ball.show, true)
+            ball.show = true
+            ball.el = el
+            this.dropBalls.push(ball)
+            console.log(this.dropBalls)
+            return
+          }
         }
       }
     }
@@ -172,4 +225,5 @@
           &.enough
             background #00b43c
             color #fff
+
 </style>

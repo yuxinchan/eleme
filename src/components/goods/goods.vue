@@ -45,7 +45,7 @@
                   <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <cart-control :food="food"></cart-control>
+                  <cart-control :food="food"  @cartAdd="_drop"></cart-control>
                 </div>
               </div>
             </li>
@@ -57,6 +57,7 @@
         :select-foods="selectFoods"
         :delivery-price="seller.deliveryPrice"
         :min-price="seller.minPrice"
+        ref="shopcart"
     ></shopcart>
   </div>
 </template>
@@ -78,7 +79,8 @@ export default {
     return {
       goods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      target: {}
     }
   },
   created() {
@@ -130,6 +132,12 @@ export default {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
       let el = foodList[index]
       this.foodsScroll.scrollToElement(el, 300)
+    },
+    _drop(target) {
+      // 体验优化,异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target)
+      })
     },
     _initScroll() {
       this.menuScroll = new BScroll(this.$refs.menuWrapper, {
