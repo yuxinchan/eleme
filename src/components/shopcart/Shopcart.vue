@@ -48,7 +48,7 @@
     },
     computed: {
       totalPrice() {
-        let total = 0;
+        let total = 0
         this.selectFoods.forEach((food) => {
           total += food.price * food.count
         })
