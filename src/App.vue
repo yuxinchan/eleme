@@ -34,6 +34,7 @@
     },
     created() {
       this.getSellerInfo()
+      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },
     methods: {
       getSellerInfo() {
