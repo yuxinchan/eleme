@@ -13,6 +13,10 @@ border-top-1px($color)
     width 100%
     border-bottom 1px solid $color
     content ''
+border-top-none()
+  &::after
+    display none
+
 border-bottom-1px($color)
   position relative
   &::after
@@ -23,6 +27,9 @@ border-bottom-1px($color)
     width 100%
     border-top 1px solid $color
     content ''
+border-bottom-none()
+  &::after
+    display none
 
 bg-image($url)
   background-image: url($url + "@2x.png")
