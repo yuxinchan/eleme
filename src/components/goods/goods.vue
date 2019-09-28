@@ -45,7 +45,7 @@
                   <span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <cart-control :food="food"  @cartAdd="_drop"></cart-control>
+                  <cart-control :food="food"  @cartAdd="handlecartAdd"></cart-control>
                 </div>
               </div>
             </li>
@@ -132,6 +132,9 @@ export default {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
       let el = foodList[index]
       this.foodsScroll.scrollToElement(el, 300)
+    },
+    handlecartAdd (target) {
+      this._drop(target)
     },
     _drop(target) {
       // 体验优化,异步执行下落动画
