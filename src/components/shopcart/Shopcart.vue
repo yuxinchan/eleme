@@ -1,6 +1,6 @@
 <template>
   <div class="shopcart">
-    <div class="content">
+    <div class="content" @click="toggleList">
       <div class="content-left">
         <div class="logo-wrapper">
           <div class="logo" :class="{'highlight':totalCount>0}">
@@ -11,7 +11,7 @@
         <div class="price" :class="{'highlight':totalPrice>0}">￥{{totalPrice}}</div>
         <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
       </div>
-      <div class="content-right">
+      <div class="content-right" @click.stop.prevent="pay">
         <div class="pay" :class="payClass">
           {{payDesc}}
         </div>
@@ -34,15 +34,42 @@
         </div>
       </transition-group>
     </div>
+    <transition name="fold">
+      <div class="shopcart-list" v-show="listShow">
+        <div class="list-header">
+          <h1 class="title">购物车</h1>
+          <span class="empty" @click="empty">清空</span>
+        </div>
+        <div class="list-content" ref="listContent">
+          <ul>
+            <li class="food" v-for="(food, index) in selectFoods" :key="index">
+              <span class="name">{{food.name}}</span>
+              <div class="price">
+                <span>￥{{food.price*food.count}}</span>
+              </div>
+              <div class="cartcontrol-wrapper">
+                <cartcontrol :food="food"></cartcontrol>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </transition>
+    <transition name="fade">
+      <div class="list-mask" @click="hideList" v-show="listShow"></div>
+    </transition>
   </div>
 </template>
 
 <script>
+  import BScroll from 'better-scroll'
   import Icon from './../icon/Icon'
+  import CartControl from './../cartcontrol/CartControl'
   export default {
     name: "Shopcart",
     components: {
-      eIcon: Icon
+      eIcon: Icon,
+      cartcontrol: CartControl
     },
     props: {
       selectFoods: {
@@ -81,7 +108,8 @@
           id: 5,
           show: false
         }],
-        dropBalls: []
+        dropBalls: [],
+        fold: true
       }
     },
     computed: {
@@ -115,6 +143,27 @@
         } else {
           return 'enough'
         }
+      },
+      listShow() {
+        if (!this.totalCount) {
+          // eslint-disable-next-line
+          this.fold = true
+          return false
+        }
+        let show = !this.fold
+        if (show) {
+          this.$nextTick(() => {
+            if (!this.scroll) {
+              // eslint-disable-next-line
+              this.scroll = new BScroll(this.$refs.listContent, {
+                click: true
+              })
+            } else {
+              this.scroll.refresh()
+            }
+          })
+        }
+        return show
       }
     },
     methods: {
@@ -147,6 +196,7 @@
         }
       },
       enter(el) {
+        // eslint-disable-next-line
         let rf = el.offsetHeight
         this.$nextTick(() => {
           el.style.webkitTransform = 'translate3d(0,0,0)'
@@ -162,6 +212,27 @@
           ball.show = false
           el.style.display = 'none'
         }
+      },
+      toggleList() {
+        if (!this.totalCount) {
+          return
+        }
+        this.fold = !this.fold
+
+      },
+      hideList() {
+        this.fold = true
+      },
+      empty() {
+        this.selectFoods.forEach((food) => {
+          food.count = 0
+        })
+      },
+      pay() {
+        if (this.totalPrice < this.minPrice) {
+          return;
+        }
+        window.alert(`支付${this.totalPrice}元`);
       }
     }
   }
@@ -170,14 +241,17 @@
 <style lang="stylus" scoped>
   @import "./../../common/stylus/index.styl"
   .shopcart
+    z-index 50
     position fixed
     left 0
     bottom 0
-    z-index 50
     width 100%
     height 48px
     .content
+      z-index 50
+      position fixed
       display flex
+      width 100%
       background #141d27
       font-size 0
       color rgba(255, 255, 255, 0.4)
@@ -273,4 +347,73 @@
             border-radius 50%
             background rgb(0,160,220)
             transition all 0.4s linear
+    .shopcart-list
+      z-index 40
+      position absolute
+      left 0
+      top 0
+      width 100%
+      padding-bottom 4px
+      background #fff
+      transform translateY(-100%)
+      &.fold-enter-active, &.fold-leave-active
+        transition all 0.5s
+      &.fold-enter, &.fold-leave-to
+        transform translate3d(0, 0, 0)
+      .list-header
+        height 40px
+        line-height 40px
+        padding 0 18px
+        background #f3f5f7
+        border-bottom 1px solid rgba(7, 17, 27, 0.1)
+        .title
+          float left
+          font-size 14px
+          color rgb(7, 17, 27)
+        .empty
+          float right
+          font-size 12px
+          color rgb(0, 160, 220)
+      .list-content
+        padding 0 18px
+        max-height 217px
+        overflow hidden
+        .food
+          position relative
+          padding 12px 0
+          box-sizing border-box
+          border-bottom-1px(rgba(7, 17, 27, 0.1))
+          &:last-child
+            border-bottom-none()
+          .name
+            line-height 24px
+            font-size 14px
+            color rgb(7, 17, 27)
+          .price
+            position absolute
+            right 90px
+            bottom 12px
+            line-height 24px
+            font-size 14px
+            font-weight 700
+            color rgb(240, 20, 20)
+          .cartcontrol-wrapper
+            position absolute
+            right 0
+            bottom 12px
+  .list-mask
+    z-index 30
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    opacity 1
+    background rgba(7, 17, 27, 0.6)
+    backdrop-filter blur(10px)
+    &.fade-enter-active, &.fade-leave-active
+      transition all 0.5s
+    &.fade-enter, &.fade-leave-to
+      opacity 0
+      background rgba(7, 17, 27, 0)
 </style>
