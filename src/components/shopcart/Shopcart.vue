@@ -230,9 +230,9 @@
       },
       pay() {
         if (this.totalPrice < this.minPrice) {
-          return;
+          return
         }
-        window.alert(`支付${this.totalPrice}元`);
+        window.alert(`支付${this.totalPrice}元`)
       }
     }
   }
