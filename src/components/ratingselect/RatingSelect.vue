@@ -17,40 +17,32 @@
 
 <script>
   import Icon from './../icon/Icon'
+
   const POSITIVE = 0
   const NEGATIVE = 1
   const ALL = 2
 
   export default {
-    name: "RatingSelect",
     components: {
       eIcon: Icon
     },
     props: {
-      ratings: {
-        type: Array,
-        default() {
-          return [];
-        }
-      },
-      // selectType: {
-      //   type: Number,
-      //   default: ALL
-      // },
-      // onlyContent: {
-      //   type: Boolean,
-      //   default: false
-      // },
-      desc: {
-        type: Object,
-        default() {
-          return {
-            all: '全部',
-            positive: '满意',
-            negative: '不满意'
+        ratings: {
+          type: Array,
+          default() {
+            return []
+          }
+        },
+        desc: {
+          type: Object,
+          default() {
+            return {
+              all: '全部',
+              positive: '满意',
+              negative: '不满意'
+            }
           }
         }
-      }
     },
     data() {
       return {
@@ -89,8 +81,9 @@
   }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus" rel="stylesheet/stylus">
   @import "./../../common/stylus/index.styl"
+
   .ratingselect
     .rating-type
       padding 18px 0
@@ -131,8 +124,8 @@
         display inline-block
         vertical-align top
         margin-right 4px
-        width 24px
         height 24px
+        width 24px
         fill rgb(147, 153, 159)
       .text
         display inline-block
