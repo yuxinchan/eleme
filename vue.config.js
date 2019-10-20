@@ -104,7 +104,7 @@ module.exports = {
     // },
     runtimeCompiler: true,
     publicPath: './',
-    outputDir: 'dist',
+    outputDir: 'docs',
     // assetsDir: 'public',
     lintOnSave: false,
     // devServer: {
