@@ -21,6 +21,9 @@
 
 <script>
   import Header from './components/header/Header'
+  // import sellerData from './../public/data/seller.json'
+
+  let sellerData = require('./../public/data/seller.json')
 
   export default {
     name: 'app',
@@ -32,16 +35,28 @@
         seller: {}
       }
     },
+    mounted() {
+      const { NODE_ENV } = process.env;
+      document.documentElement.className = NODE_ENV;
+    },
     created() {
       this.getSellerInfo()
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },
     methods: {
       getSellerInfo() {
-        this.axios.get('/api/seller').then(this.getSellerInfoSucc)
+        // this.axios.get('/api/seller').then(this.getSellerInfoSucc)
+
+        // this.axios({
+        //   url: '/data/seller.json',
+        //   type: 'get',
+        //   dataType: 'json'
+        // }).then(this.getSellerInfoSucc)
+
+        this.getSellerInfoSucc(sellerData)
       },
       getSellerInfoSucc(res) {
-        res = res.data
+        // res = res.data
         if (res.ret && res.data) {
           const data = res.data
           this.seller = data.seller

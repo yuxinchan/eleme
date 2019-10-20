@@ -90,9 +90,9 @@ const express = require('express')
 // 创建express实例
 const app = express()
 // 读取json数据
-const goods = require('./data/goods.json')
-const ratings = require('./data/ratings.json')
-const seller = require('./data/seller.json')
+// const goods = require('./public/data/goods.json')
+// const ratings = require('./public/data/ratings.json')
+// const seller = require('./public/data/seller.json')
 module.exports = {
     // 根路径
     // configureWebpack: {
@@ -103,35 +103,35 @@ module.exports = {
     //     }
     // },
     runtimeCompiler: true,
-    publicPath: '/',
+    publicPath: './',
     outputDir: 'dist',
-    assetsDir: 'assets',
+    // assetsDir: 'public',
     lintOnSave: false,
-    devServer: {
-        open: false,
-        // host: 'localhost',
-        port: 8080,
-        https: false,
-        proxy:{
-            'api':{
-                target:'http//localhost:8080/api',
-                ws:true,
-                changOrigin:true,
-                pathRewrite:{
-                    '^/api':''
-                }
-            }
-        },
-        before(app){
-            app.get('/api/goods',(req,res) =>{
-                res.json(goods)
-            })
-            app.get('/api/ratings',(req,res) =>{
-                res.json(ratings)
-            })
-            app.get('/api/seller',(req,res) =>{
-                res.json(seller)
-            })
-        }
-    }
+    // devServer: {
+    //     open: false,
+    //     // host: 'localhost',
+    //     port: 8080,
+    //     https: false,
+    //     proxy:{
+    //         'api':{
+    //             target:'http//localhost:8080/api',
+    //             ws:true,
+    //             changOrigin:true,
+    //             pathRewrite:{
+    //                 '^/api':''
+    //             }
+    //         }
+    //     },
+    //     before(app){
+    //         app.get('/api/goods',(req,res) =>{
+    //             res.json(goods)
+    //         })
+    //         app.get('/api/ratings',(req,res) =>{
+    //             res.json(ratings)
+    //         })
+    //         app.get('/api/seller',(req,res) =>{
+    //             res.json(seller)
+    //         })
+    //     }
+    // }
 }

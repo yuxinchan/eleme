@@ -72,6 +72,10 @@ import BScroll from 'better-scroll'
 import Shopcart from './../shopcart/Shopcart'
 import CartControl from './../cartcontrol/CartControl'
 import Food from './../food/Food'
+// import goodsData from './../../../public/data/goods.json'
+
+let goodsData = require('./../../../public/data/goods.json')
+
 export default {
   name: "Goods",
   components: {
@@ -120,10 +124,18 @@ export default {
   },
   methods: {
     getGoodsInfo() {
-      this.axios.get('/api/goods').then(this.getGoodsInfoSucc)
+      // this.axios.get('/api/goods').then(this.getGoodsInfoSucc)
+
+      // this.axios({
+      //   url: '/data/goods.json',
+      //   type: 'get',
+      //   dataType: 'json'
+      // }).then(this.getGoodsInfoSucc)
+
+      this.getGoodsInfoSucc(goodsData)
     },
     getGoodsInfoSucc(res) {
-      res = res.data
+      // res = res.data
       if (res.ret && res.data) {
         const data = res.data
         this.goods = data.goods

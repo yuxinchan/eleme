@@ -67,6 +67,9 @@
   import RatingSelect from './../ratingselect/RatingSelect'
   import Split from './../split/Split'
   import ICon from './../icon/Icon'
+  // import ratingsData from './../../../public/data/ratings.json'
+
+  let ratingsData = require('./../../../public/data/ratings.json')
 
   const ALL = 2
 
@@ -99,10 +102,18 @@
     },
     methods: {
       getRatingsInfo() {
-        this.axios.get('/api/ratings').then(this.getRatingsInfoSucc)
+        // this.axios.get('/api/ratings').then(this.getRatingsInfoSucc)
+
+        // this.axios({
+        //   url: '/data/ratings.json',
+        //   type: 'get',
+        //   dataType: 'json'
+        // }).then(this.getRatingsInfoSucc)
+
+        this.getRatingsInfoSucc(ratingsData)
       },
       getRatingsInfoSucc(res) {
-        res = res.data
+        // res = res.data
         if (res.ret && res.data) {
           const data = res.data
           this.ratings = data.ratings
